@@ -1,0 +1,249 @@
+{
+  "name": "handoff-server",
+  "version": "1.0.0",
+  "description": "MCP server for managing AI agent handoffs",
+  "author": "MCPaaS.dev",
+  "license": "MIT",
+  "tools": {
+    "read_handoff": {
+      "description": "Read a handoff document with optional format",
+      "input": {
+        "type": "object",
+        "properties": {
+          "handoff_id": {
+            "type": "string",
+            "description": "ID of the handoff to read"
+          },
+          "format": {
+            "type": "string",
+            "enum": ["full", "summary"],
+            "default": "full",
+            "description": "Format of the returned handoff content"
+          }
+        },
+        "required": ["handoff_id"]
+      }
+    },
+    "create_handoff": {
+      "description": "Create a new handoff document from template",
+      "input": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["standard", "quick"],
+            "description": "Type of handoff template to use"
+          },
+          "initialData": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "description": "Date of handoff"
+              },
+              "time": {
+                "type": "string",
+                "description": "Time of handoff"
+              },
+              "currentState": {
+                "type": "object",
+                "properties": {
+                  "workingOn": {
+                    "type": "string",
+                    "description": "Current task being worked on"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Current status of the work"
+                  },
+                  "nextStep": {
+                    "type": "string",
+                    "description": "Next step to take"
+                  }
+                },
+                "required": ["workingOn", "status", "nextStep"]
+              },
+              "projectContext": {
+                "type": "string",
+                "description": "Overall project context",
+                "optional": true
+              },
+              "environmentStatus": {
+                "type": "object",
+                "properties": {
+                  "details": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "enum": ["✅", "⚠️", "❌"]
+                    }
+                  }
+                },
+                "required": ["details"]
+              }
+            },
+            "required": ["date", "time", "currentState", "environmentStatus"]
+          }
+        },
+        "required": ["type", "initialData"]
+      }
+    },
+    "update_handoff": {
+      "description": "Update specific sections of a handoff document",
+      "input": {
+        "type": "object",
+        "properties": {
+          "handoff_id": {
+            "type": "string",
+            "description": "ID of the handoff to update"
+          },
+          "updates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "section": {
+                  "type": "string",
+                  "enum": ["progress", "priorities", "issues", "environment", "context"]
+                },
+                "content": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "required": ["section", "content"]
+            }
+          }
+        },
+        "required": ["handoff_id", "updates"]
+      }
+    },
+    "complete_handoff": {
+      "description": "Complete a handoff, optionally archiving it",
+      "input": {
+        "type": "object",
+        "properties": {
+          "handoff_id": {
+            "type": "string",
+            "description": "ID of the handoff to complete"
+          },
+          "completionData": {
+            "type": "object",
+            "properties": {
+              "endTime": {
+                "type": "string",
+                "description": "Time of completion"
+              },
+              "progress": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of completed items"
+              },
+              "nextSteps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of next steps"
+              },
+              "archiveReason": {
+                "type": "string",
+                "description": "Reason for archiving",
+                "optional": true
+              }
+            },
+            "required": ["endTime", "progress", "nextSteps"]
+          }
+        },
+        "required": ["handoff_id", "completionData"]
+      }
+    },
+    "archive_handoff": {
+      "description": "Move a handoff to the archive with metadata",
+      "input": {
+        "type": "object",
+        "properties": {
+          "handoff_id": {
+            "type": "string",
+            "description": "ID of the handoff to archive"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "reason": {
+                "type": "string",
+                "description": "Reason for archiving"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags to associate with the archived handoff"
+              },
+              "completionStatus": {
+                "type": "string",
+                "enum": ["success", "partial", "blocked"],
+                "description": "Final status of the handoff"
+              }
+            },
+            "required": ["reason", "tags", "completionStatus"]
+          }
+        },
+        "required": ["handoff_id", "metadata"]
+      }
+    },
+    "list_handoffs": {
+      "description": "List handoffs with optional filtering",
+      "input": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["active", "archived", "all"],
+            "description": "Status of handoffs to list"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["standard", "quick"],
+            "description": "Type of handoffs to list",
+            "optional": true
+          },
+          "filters": {
+            "type": "object",
+            "properties": {
+              "dateRange": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "string",
+                    "description": "Start date (ISO format)"
+                  },
+                  "end": {
+                    "type": "string",
+                    "description": "End date (ISO format)"
+                  }
+                },
+                "required": ["start", "end"]
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags to filter by"
+              },
+              "hasIssues": {
+                "type": "boolean",
+                "description": "Filter for handoffs with issues"
+              }
+            }
+          }
+        },
+        "required": ["status"]
+      }
+    }
+  }
+}

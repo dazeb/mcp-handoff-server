@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "handoff": {
+      "type": "http",
+      "url": "http://localhost:3003",
+      "capabilities": {
+        "mcp_tools": "1.0.0",
+        "streaming": false,
+        "jsonrpc": "2.0"
+      }
+    }
+  }
+}
