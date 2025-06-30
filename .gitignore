@@ -167,6 +167,7 @@ handoff-system/
 
 # Test files
 test-handoff.js
+test-npx.js
 test-*.js
 *.test.js
 *.spec.js
@@ -194,6 +195,9 @@ error.log
 *.bak
 *.backup
 *.old
+
+# Documentation and setup files (development only)
+NPX-SETUP.md
 
 # Editor directories and files
 .vscode/

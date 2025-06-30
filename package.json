@@ -35,12 +35,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/mcp-handoff-server.git"
+    "url": "https://github.com/dazeb/mcp-handoff-server.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/mcp-handoff-server/issues"
+    "url": "https://github.com/dazeb/mcp-handoff-server/issues"
   },
-  "homepage": "https://github.com/your-username/mcp-handoff-server#readme",
+  "homepage": "https://github.com/dazeb/mcp-handoff-server#readme",
   "engines": {
     "node": ">=18.0.0"
   },

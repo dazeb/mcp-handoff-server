@@ -20,7 +20,25 @@ A comprehensive **Model Context Protocol (MCP) server** designed to manage AI ag
 - **Node.js** 18+
 - **npm** or **yarn**
 
-### Installation
+### NPX Usage (Recommended)
+
+Run directly without installation:
+
+```bash
+# Run in MCP mode (default)
+npx mcp-handoff-server
+
+# Run HTTP server mode
+npx mcp-handoff-server --mode http
+
+# Run with custom port and directory
+npx mcp-handoff-server --mode http --port 8080 --handoff-root ./my-handoffs
+
+# Show help
+npx mcp-handoff-server --help
+```
+
+### Local Development Installation
 
 ```bash
 # Clone the repository
@@ -36,18 +54,60 @@ npm run dev
 
 The server will automatically create the required directory structure and templates on first startup.
 
-## 🛠️ Usage Modes
+## 🛠️ Usage Modes & CLI Options
+
+### NPX Command Line Interface
+
+The server provides a comprehensive CLI with the following options:
+
+```bash
+npx mcp-handoff-server [OPTIONS]
+
+OPTIONS:
+  -m, --mode <mode>           Operation mode: 'mcp' or 'http' (default: mcp)
+  -p, --port <port>           HTTP server port (default: 3001, only for http mode)
+  -r, --handoff-root <path>   Path to handoff system directory (default: ./handoff-system)
+  -h, --help                  Show help message
+  -v, --version               Show version information
+```
 
 ### MCP Protocol Mode (Default)
+
 ```bash
+# Using npx (recommended)
+npx mcp-handoff-server
+
+# Using local development
 npm run dev
 # Server communicates via stdin/stdout for MCP clients
 ```
 
 ### HTTP Server Mode
+
 ```bash
+# Using npx (recommended)
+npx mcp-handoff-server --mode http
+npx mcp-handoff-server --mode http --port 8080
+
+# Using local development
 HTTP_MODE=true npm run dev
 # Server runs on http://localhost:3001
+```
+
+### CLI Examples
+
+```bash
+# Default MCP mode
+npx mcp-handoff-server
+
+# HTTP server on custom port
+npx mcp-handoff-server --mode http --port 8080
+
+# Custom handoff directory
+npx mcp-handoff-server --handoff-root /path/to/handoffs
+
+# Combine multiple options
+npx mcp-handoff-server --mode http --port 3002 --handoff-root ./my-handoffs
 ```
 
 ## 📋 Available Tools
@@ -580,6 +640,22 @@ CMD ["npm", "start"]
 
 To use with MCP clients, configure your client to connect to this server:
 
+**Using NPX (Recommended):**
+```json
+{
+  "mcpServers": {
+    "handoff-server": {
+      "command": "npx",
+      "args": ["mcp-handoff-server"],
+      "env": {
+        "HANDOFF_ROOT": "./handoff-system"
+      }
+    }
+  }
+}
+```
+
+**Using Local Installation:**
 ```json
 {
   "mcpServers": {
@@ -593,6 +669,32 @@ To use with MCP clients, configure your client to connect to this server:
   }
 }
 ```
+
+## 📦 Publishing to NPM
+
+To publish this package to npm for global npx usage:
+
+1. **Update package.json** with your details:
+   ```json
+   {
+     "name": "your-mcp-handoff-server",
+     "repository": {
+       "type": "git",
+       "url": "https://github.com/your-username/mcp-handoff-server.git"
+     }
+   }
+   ```
+
+2. **Build and publish**:
+   ```bash
+   npm run build
+   npm publish
+   ```
+
+3. **Use globally**:
+   ```bash
+   npx your-mcp-handoff-server --mode http
+   ```
 
 ## 🔍 API Reference
 

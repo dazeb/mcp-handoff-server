@@ -118,13 +118,7 @@ For more information, visit: https://github.com/your-repo/mcp-handoff-server
 }
 
 function showVersion(): void {
-  // Read version from package.json
-  try {
-    const packageJson = require('../package.json');
-    console.log(`MCP Handoff Server v${packageJson.version}`);
-  } catch (error) {
-    console.log('MCP Handoff Server (version unknown)');
-  }
+  console.log('MCP Handoff Server v1.0.0');
 }
 
 async function main(): Promise<void> {
