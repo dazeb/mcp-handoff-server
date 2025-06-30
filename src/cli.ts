@@ -118,7 +118,7 @@ For more information, visit: https://github.com/dazeb/mcp-handoff-server
 }
 
 function showVersion(): void {
-  console.log('MCP Handoff Server v1.0.0');
+  console.log('MCP Handoff Server v1.0.2');
 }
 
 async function main(): Promise<void> {
