@@ -76,7 +76,7 @@ function showHelp(): void {
 🤝 MCP Handoff Server - AI Agent Handoff Management
 
 USAGE:
-  npx mcp-handoff-server [OPTIONS]
+  npx -y mcp-handoff-server [OPTIONS]
 
 OPTIONS:
   -m, --mode <mode>           Operation mode: 'mcp' or 'http' (default: mcp)
@@ -87,19 +87,19 @@ OPTIONS:
 
 EXAMPLES:
   # Run in MCP mode (default - communicates via stdin/stdout)
-  npx mcp-handoff-server
+  npx -y mcp-handoff-server
 
   # Run HTTP server on default port (3001)
-  npx mcp-handoff-server --mode http
+  npx -y mcp-handoff-server --mode http
 
   # Run HTTP server on custom port
-  npx mcp-handoff-server --mode http --port 8080
+  npx -y mcp-handoff-server --mode http --port 8080
 
   # Use custom handoff directory
-  npx mcp-handoff-server --handoff-root /path/to/handoffs
+  npx -y mcp-handoff-server --handoff-root /path/to/handoffs
 
   # Combine options
-  npx mcp-handoff-server --mode http --port 3002 --handoff-root ./my-handoffs
+  npx -y mcp-handoff-server --mode http --port 3002 --handoff-root ./my-handoffs
 
 MODES:
   mcp    Model Context Protocol mode - communicates via stdin/stdout
@@ -113,7 +113,7 @@ ENVIRONMENT VARIABLES:
   HANDOFF_ROOT      Default handoff system directory (default: ./handoff-system)
   HTTP_MODE         Set to 'true' to default to HTTP mode
 
-For more information, visit: https://github.com/your-repo/mcp-handoff-server
+For more information, visit: https://github.com/dazeb/mcp-handoff-server
 `);
 }
 

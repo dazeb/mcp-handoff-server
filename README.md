@@ -16,10 +16,10 @@ When AI agents need to pass work between each other, this server provides:
 
 ```bash
 # Start in MCP mode (for MCP clients)
-npx mcp-handoff-server
+npx -y mcp-handoff-server
 
 # Start HTTP server (for testing/direct API access)
-npx mcp-handoff-server --mode http
+npx -y mcp-handoff-server --mode http
 ```
 
 That's it! The server automatically creates all needed folders and templates.
@@ -31,9 +31,12 @@ Add to your MCP client configuration:
 ```json
 {
   "mcpServers": {
-    "handoff-server": {
+    "handoff": {
       "command": "npx",
-      "args": ["mcp-handoff-server"]
+      "args": [
+        "-y",
+        "mcp-handoff-server"
+      ]
     }
   }
 }
@@ -42,7 +45,7 @@ Add to your MCP client configuration:
 ### For HTTP Testing
 ```bash
 # Start server
-npx mcp-handoff-server --mode http
+npx -y mcp-handoff-server --mode http
 
 # Test it works
 curl http://localhost:3001/health
@@ -80,7 +83,7 @@ graph LR
 
 ```bash
 # Start the server
-npx mcp-handoff-server --mode http
+npx -y mcp-handoff-server --mode http
 
 # Create a new handoff
 curl -X POST http://localhost:3001/mcp \
@@ -113,7 +116,7 @@ curl -X POST http://localhost:3001/mcp \
 ## 🔧 Command Options
 
 ```bash
-npx mcp-handoff-server [options]
+npx -y mcp-handoff-server [options]
 
 Options:
   --mode <mode>        'mcp' or 'http' (default: mcp)
